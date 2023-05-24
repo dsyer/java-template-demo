@@ -1,4 +1,4 @@
-@import gg.jte.demo.DemoModel
+@import demo.DemoModel
 
 @param DemoModel model
 

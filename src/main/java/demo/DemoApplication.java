@@ -1,4 +1,4 @@
-package gg.jte.demo;
+package demo;
 
 import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;

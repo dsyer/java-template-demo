@@ -1,4 +1,4 @@
-package gg.jte.demo;
+package demo;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
