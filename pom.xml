@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.0</version>
+		<version>2.7.11</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>gg.jte</groupId>
@@ -16,7 +16,6 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
-		<jte.version>2.3.0</jte.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -24,9 +23,9 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>gg.jte</groupId>
-			<artifactId>jte</artifactId>
-			<version>${jte.version}</version>
+			<groupId>com.github.iceant</groupId>
+			<artifactId>rocker-spring-boot-starter</artifactId>
+			<version>master-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -44,32 +43,44 @@
 
 	</dependencies>
 
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
 			<plugin>
-				<groupId>gg.jte</groupId>
-				<artifactId>jte-maven-plugin</artifactId>
-				<version>${jte.version}</version>
-				<configuration>
-					<sourceDirectory>${basedir}/src/main/jte</sourceDirectory>
-					<contentType>Html</contentType>
-					<binaryStaticContent>true</binaryStaticContent>
-				</configuration>
+				<groupId>com.fizzed</groupId>
+				<artifactId>rocker-maven-plugin</artifactId>
+				<version>1.2.1</version>
 				<executions>
 					<execution>
+						<id>generate-rocker-templates</id>
 						<phase>generate-sources</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>
+						<configuration>
+							<javaVersion>${java.version}</javaVersion>
+							<templateDirectory>src/main/resources</templateDirectory>
+							<outputDirectory>target/generated-sources/rocker</outputDirectory>
+							<discardLogicWhitespace>true</discardLogicWhitespace>
+							<targetCharset>UTF-8</targetCharset>
+							<postProcessing>
+								<param>com.fizzed.rocker.processor.LoggingProcessor</param>
+								<param>com.fizzed.rocker.processor.WhitespaceRemovalProcessor</param>
+							</postProcessing>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -81,41 +92,12 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>${project.build.directory}/generated-sources/jte</source>
+								<source>${project.build.directory}/generated-sources/rocker</source>
 							</sources>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
-			<!-- Since we use precompiled binary content parts, we need to copy those resources next
-			to the compiled class files (the maven plugin doesn't do that for us) -->
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.0.2</version>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${basedir}/target/generated-sources/jte</directory>
-									<includes>
-										<include>**/*.bin</include>
-									</includes>
-									<filtering>false</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
 		</plugins>
 	</build>
 

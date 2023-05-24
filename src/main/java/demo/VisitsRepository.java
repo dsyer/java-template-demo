@@ -1,4 +1,4 @@
-package gg.jte.demo;
+package demo;
 
 import org.springframework.stereotype.Service;
 

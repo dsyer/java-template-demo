@@ -1,4 +1,4 @@
-package gg.jte.demo;
+package demo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

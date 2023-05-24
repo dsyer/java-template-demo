@@ -1,4 +1,4 @@
-package gg.jte.demo;
+package demo;
 
 public class DemoModel {
 	public String name;
