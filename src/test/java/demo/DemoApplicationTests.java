@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class DemoApplicationTests {
+
 	@Autowired
 	TestRestTemplate restTemplate;
 

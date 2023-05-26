@@ -1,5 +1,7 @@
 package demo;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +16,7 @@ public class DemoController {
 	@GetMapping("/")
 	public String view(Model model) {
 		visitsRepository.add();
-		model.addAttribute("model", new DemoModel("mystérieux visiteur", visitsRepository.get()));
-		return "templates/demo.rocker.html";
+		model.addAttribute("arguments", Map.of("model", new DemoModel("mystérieux visiteur", visitsRepository.get())));
+		return "demo";
 	}
 }
