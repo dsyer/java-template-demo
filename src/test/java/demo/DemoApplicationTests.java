@@ -20,5 +20,6 @@ class DemoApplicationTests {
 		ResponseEntity<String> value = restTemplate.getForEntity("/", String.class);
 		assertThat(value.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(value.getBody()).contains("mystérieux visiteur");
+		assertThat(value.getBody()).contains("<title>Demo</title>");
 	}
 }

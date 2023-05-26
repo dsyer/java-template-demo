@@ -62,6 +62,7 @@
 				<version>1.2.1</version>
 				<executions>
 					<execution>
+						<?m2e execute onConfiguration,onIncremental?>
 						<id>generate-rocker-templates</id>
 						<phase>generate-sources</phase>
 						<goals>

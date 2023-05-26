@@ -2,7 +2,10 @@
 
 @args(DemoModel model)
 
-Hello @model.name!
-<br>
-<br>
-You are visitor number @model.visits.
+@templates.layout.template("Demo") -> {
+	<h1>Demo</h1>
+	<p>Hello @model.name!</p>
+	<br>
+	<br>
+	<p>You are visitor number @model.visits.</p>
+}
