@@ -1,9 +1,11 @@
 package demo;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.View;
 
 @Controller
 public class DemoController {
@@ -12,8 +14,9 @@ public class DemoController {
 	VisitsRepository visitsRepository;
 
 	@GetMapping("/")
-	public View view() {
+	public String view(Model model) {
 		visitsRepository.add();
-		return new RockerView("demo", new DemoModel("mystérieux visiteur", visitsRepository.get()));
+		model.addAttribute("arguments", Map.of("model", new DemoModel("mystérieux visiteur", visitsRepository.get())));
+		return "demo";
 	}
 }

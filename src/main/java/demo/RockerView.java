@@ -12,6 +12,7 @@ import com.fizzed.rocker.BindableRockerModel;
 import com.fizzed.rocker.Rocker;
 import com.fizzed.rocker.RockerModel;
 import com.fizzed.rocker.runtime.OutputStreamOutput;
+import com.fizzed.rocker.runtime.RockerRuntime;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -48,7 +49,8 @@ public class RockerView implements View {
 	}
 
 	private void bind(BindableRockerModel template, Map<String, ?> model) {
-		for (String name : getModelArgumentNames(template)) {
+		RockerModel rocker = RockerRuntime.getInstance().getBootstrap().model(path);
+		for (String name : getModelArgumentNames(rocker)) {
 			if (model.containsKey(name)) {
 				template.bind(name, model.get(name));
 			}
@@ -62,13 +64,12 @@ public class RockerView implements View {
 	}
 
 	static private String[] getModelArgumentNames(RockerModel model) {
-        try {
-            Method f = model.getClass().getMethod("getArgumentNames");
-            return (String[])f.invoke(null);
-        } catch (Exception e) {
-            throw new IllegalStateException( "Unable to read getArgumentNames static method from template");
-        }
-    }
-
+		try {
+			Method f = model.getClass().getMethod("getArgumentNames");
+			return (String[]) f.invoke(null);
+		} catch (Exception e) {
+			throw new IllegalStateException("Unable to read getArgumentNames static method from template");
+		}
+	}
 
 }
