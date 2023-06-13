@@ -3,11 +3,11 @@ package demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.View;
 
-import jakarta.servlet.http.HttpServletResponse;
+import io.jstach.opt.spring.webmvc.JStachioModelView;
 
 @Controller
 public class DemoController {
@@ -25,10 +25,8 @@ public class DemoController {
 	}
 
 	@GetMapping("/")
-	public String view(Model model, HttpServletResponse response) {
+	public View view() {
 		visitsRepository.add();
-
-		model.addAttribute("model", new DemoModel("mystérieux visiteur", visitsRepository.get()));
-		return "demo";
+		return JStachioModelView.of(new DemoModel("mystérieux visiteur", visitsRepository.get()));
 	}
 }
