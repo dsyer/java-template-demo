@@ -1,3 +1,3 @@
-## jte Spring Boot demo
+## JStachio Spring Boot demo
 
-A simple demo of jte running with Spring Boot.
+A simple demo of JStachio running with Spring Boot.

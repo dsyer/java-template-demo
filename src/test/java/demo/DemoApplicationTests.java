@@ -19,5 +19,7 @@ class DemoApplicationTests {
 		ResponseEntity<String> value = restTemplate.getForEntity("/", String.class);
 		assertThat(value.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(value.getBody()).contains("mystérieux visiteur");
+		assertThat(value.getHeaders().getContentType().toString()).isEqualTo("text/html;charset=UTF-8");
+		assertThat(value.getHeaders().getContentLength()).isNotNull();
 	}
 }
