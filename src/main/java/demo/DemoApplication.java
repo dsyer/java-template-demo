@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import io.jstach.jstache.JStacheCatalog;
 import io.jstach.jstache.JStacheFlags;
 import io.jstach.jstache.JStacheFlags.Flag;
 import io.jstach.jstache.JStacheFormatterTypes;
