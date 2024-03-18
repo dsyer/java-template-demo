@@ -6,8 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.View;
 
 import jakarta.servlet.http.HttpServletResponse;
+import templates.Demo;
 
 @Controller
 public class DemoController {
@@ -25,10 +27,8 @@ public class DemoController {
 	}
 
 	@GetMapping("/")
-	public String view(Model model, HttpServletResponse response) {
+	public View view(Model model, HttpServletResponse response) {
 		visitsRepository.add();
-
-		model.addAttribute("model", new DemoModel("mystérieux visiteur", visitsRepository.get()));
-		return "demo";
+		return new StringView(() -> Demo.render(new DemoModel("mystérieux visiteur", visitsRepository.get())));
 	}
 }

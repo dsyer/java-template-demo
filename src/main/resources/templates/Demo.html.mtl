@@ -1,6 +1,6 @@
-@import demo.DemoModel
+<%@ import demo.DemoModel %>
 
-@param DemoModel model
+<%@ params(DemoModel model) %>
 
 Hello ${model.name}!
 <br>
