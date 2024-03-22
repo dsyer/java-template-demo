@@ -125,7 +125,7 @@ target/generated-sources/annotations/
     └── DemoModelRenderer.java
 ```
 
-The sample also includes a [test main](https://docs.spring.io/spring-boot/docs/3.2.3/maven-plugin/reference/htmlsingle/#run.test-run-goal) so you can run from the command line with `./mvnw spring-boot:test-run` and the application will restart when you make changes in the IDE. One of the disadvantages of the build-time compilation is that you have to force a recompile to see changes in the templates. The IDE won't do that automatically, so you might have to use another tool to trigger a recompile. I have had some success with using this to force the model class to recompile when the template changes:
+The sample also includes a [test main](https://docs.spring.io/spring-boot/docs/3.2.3/maven-plugin/reference/htmlsingle/#run.test-run-goal) so you can run from the command line with `./mvnw spring-boot:test-run` or via the test main in the IDE, and the application will restart when you make changes in the IDE. One of the disadvantages of the build-time compilation is that you have to force a recompile to see changes in the templates. The IDE won't do that automatically, so you might have to use another tool to trigger a recompile. I have had some success with using this to force the model class to recompile when the template changes:
 
 ```
 $ while inotifywait src/main/resources/templates -e close_write; do \
@@ -408,12 +408,17 @@ along with some source and resource copying:
 </plugin>
 ```
 
-The runtime dependency is:
+The runtime dependencies are:
 
 ```xml
 <dependency>
 	<groupId>gg.jte</groupId>
 	<artifactId>jte</artifactId>
+	<version>${jte.version}</version>
+</dependency>
+<dependency>
+	<groupId>gg.jte</groupId>
+	<artifactId>jte-spring-boot-starter-3</artifactId>
 	<version>${jte.version}</version>
 </dependency>
 ```
@@ -424,23 +429,13 @@ The controller implementation is very conventional - in fact it is identical to 
 
 ### JTE Configuration
 
-Like with Rocker we can add some Spring MVC components and Spring Boot autoconfiguration to deal with the JTE templates. There is a `View` implementation, and a `ViewResolver` that gets added by Spring Boot through autoconfiguration:
+JTE comes with its own Spring Boot autoconfiguration (we added it in the `pom.xml`), so you almost don't need to do anything else. There is one tiny thing you need to do to make it work with Spring Boot 3.x, which is to add a property to the `application.properties` file. For development time, especially if you are using [Spring Boot Devtools](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using.devtools), you would want:
 
-```java
-@Configuration
-public class JteConfiguration {
-
-	@Bean
-	public ViewResolver jteViewResolve(TemplateEngine templateEngine) {
-		return new JteViewResolver(templateEngine);
-	}
-
-	@Bean
-	public TemplateEngine templateEngine() {
-		return TemplateEngine.createPrecompiled(ContentType.Html);
-	}
-}
 ```
+gg.jte.developmentMode=true
+```
+
+In production, switch that off with a Spring profile and use `gg.jte.usePrecompiledTemplates=true` instead.
 
 ### Running the Sample
 
