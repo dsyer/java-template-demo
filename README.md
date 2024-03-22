@@ -104,15 +104,13 @@ public class DemoApplication {
 }
 ```
 
-and a `package-info.java` file that points back to it (you can have one of these per Java package):
+and a `package-info.java` file that points back to it (you need one of these per Java package that contains `@JStache` models):
 
 ```java
-@JStacheConfig(using = DemoApplication.class, interfacing = @JStacheInterfaces(templateAnnotations = { Component.class }))
+@JStacheConfig(using = DemoApplication.class)
 package demo;
 ...
 ```
-
-The sample app works fine without the `interfacing` attribute, but we added it to show how it works - what it does is tell the JStachio compiler to generate an interface for the template class, and to annotate it with `@Component`. This is useful if you want to use the template class as a Spring bean (for example, to inject it into a controller), and it also makes it possible to locate the templates without reflection by looking them up as Spring components. You don't need to know how that works because it happens internally in the Spring Boot autoconfigured MVC processing, but it will be useful later when we create a GraalVM native image.
 
 ### Running the Sample
 
